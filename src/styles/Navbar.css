@@ -1,0 +1,85 @@
+.main-container{
+    background-color: #5A7ACD;
+    width: 100%;
+}
+
+.nav-container{
+    width: 1000px;
+    padding: 14px 20px;
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.nav-container h1{
+    color: #ffffff;
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.nav-link{
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+.nav-link ul{
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+.links{
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.links:hover{
+    background-color: #FEB05D;
+    color: #2B2A2A;
+}
+
+.nav-actions{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.theme-toggle{
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover{
+    color: #FEB05D;
+    transform: scale(1.1);
+}
+
+.logout-btn{
+    background-color: #FEB05D;
+    color: #2B2A2A;
+    font-weight: 600;
+}
+
+.logout-btn:hover{
+    background-color: #ffffff;
+    color: #2B2A2A;
+}
