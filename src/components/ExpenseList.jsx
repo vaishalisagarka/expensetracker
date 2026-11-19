@@ -1,7 +1,24 @@
+import { useEffect, useState } from 'react';
 import '../styles/ExpenseList.css';
+import ConfirmationModal from './ConfirmationModal';
 
-function ExpenseList({expenses}){
+function ExpenseList(){
+    const [expenses,setExpenses]=useState([]);
+
+    const loadExpenses=() =>{
+        const savedExpenses=JSON.parse(localStorage.getItem("expenses") || "[]");
+        setExpenses(savedExpenses);
+    };
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        loadExpenses();
+    },[]);
+    const totalAmount = expenses.reduce(
+        (sum,item)=> sum + Number(item.amount),0
+    );
     return(
+        <>
         <div className="ExpenseList">
             <div className="list-search">
                 <div>
@@ -39,10 +56,11 @@ function ExpenseList({expenses}){
                 </thead>
 
                 <tbody>
-                    {expenses.map((expense)=>(
-                        <tr>
+                    {expenses.length>0? (
+                        expenses.map((expense)=>(
+                        <tr key={expense.id}>
                             <td>{expense.amount}</td>
-                            <td>{expense.shopping}</td>
+                            <td>{expense.description}</td>
                             <td>{expense.date}</td>
                             <td>{expense.category}</td>
                              <td className="table-actions">
@@ -51,15 +69,32 @@ function ExpenseList({expenses}){
                                 <button className="btn-readmore">View</button>
                             </td>
                         </tr>
-                    ))}
+                    ))
+                    ):(<>
+                        <tr>
+                            <td colSpan="7" className="no-data">No Data Found</td>
+                        </tr>
+                    </>
+                        
+                    )}
+                    
 
                     <tr className="expense-total">
-                        <td colSpan={5}>Total: ₹2,000</td>
+                        <td colSpan={5}>Total Amount:₹{totalAmount}</td>
                     </tr>
                 </tbody>
             </table>
 
         </div>
+        <ConfirmationModal
+        title="Delete Expense"
+        message={"are you sure you want to delete this expense"}
+        confirmText="Delete"
+        cancelText="Cancel"
+        onCancel={()=>{}}
+        onConfirm={()=>{}}
+        />
+        </>
     );
 }
 
