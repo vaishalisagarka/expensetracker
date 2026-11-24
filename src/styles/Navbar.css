@@ -48,6 +48,11 @@ margin: 0;
     color: #2B2A2A;
 }
 
+.links.active{
+    background-color: #FEB05D;
+    color: #2B2A2A;
+}
+
 .nav-actions{
     display: flex;
     align-items: center;
