@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import '../styles/ExpenseList.css';
 import ConfirmationModal from './ConfirmationModal';
 import EditModel from './EditModel';
+import { useNavigate } from 'react-router-dom';
 
 function ExpenseList(){
     const [expenses,setExpenses]=useState([]);
     const [deleteExpense,setDeleteExpense]=useState(null);
     const [openModel,setOpenModel] = useState(false);
     const [editId, setEditId] = useState(null);
+    const navigate = useNavigate();
 
     const editHandler = (id) => {
         setEditId(id);
@@ -39,6 +41,11 @@ function ExpenseList(){
     const totalAmount = expenses.reduce(
         (sum,item)=> sum + Number(item.amount),0
     );
+
+    const handleReadmore = (id) => {
+        navigate(`/expenseDetails/${id}`);
+    };
+
     return(
         <>
         <div className="ExpenseList">
@@ -86,9 +93,15 @@ function ExpenseList(){
                             <td>{expense.date}</td>
                             <td>{expense.category}</td>
                              <td className="table-actions">
-                                <button  type="button" className="btn-delete" onClick={() => setDeleteExpense(expense)}>Delete</button>
-                                <button  className="btn-edit" onClick={() => editHandler(expense.id)}>Edit</button>
-                                <button className="btn-readmore">View</button>
+                                <button  type="button" className="btn-delete" 
+                                onClick={() => setDeleteExpense(expense)}>Delete</button>
+                                
+                                <button  className="btn-edit" 
+                                onClick={() => editHandler(expense.id)}>Edit</button>
+                               
+                                <button className="btn-readmore" 
+                                onClick={() => handleReadmore(expense.id)}>View</button>
+                                
                             </td>
                         </tr>
                     ))
@@ -119,7 +132,10 @@ function ExpenseList(){
             />
         )}
         {openModel && editId !== null &&(
-            <EditModel/>
+            <EditModel
+            editId={editId}
+            onClose={() => setOpenModel(false)}
+            onUpdate={loadExpenses}/>
         )}
         
         </>
