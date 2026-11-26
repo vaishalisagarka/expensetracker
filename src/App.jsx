@@ -5,11 +5,14 @@ import AddExpensepage from "./pages/AddExpensepage";
 import ExpenseDetails from "./components/ExpenseDetails";
 import Layout from "./Layout/Layout";
 import LoginPage from "./pages/LoginPage";
+import PrivateRoutes from "./auth/PrivateRoutes";
+import ExpenseItemsPage from "./pages/ExpenseItemsPage";
 
 function App(){
   const route=createBrowserRouter([
-    {path:"/",element:<Layout/>,children:[{path:'/',element:<Homepage/>},
+    {path:"/",element:(<PrivateRoutes><Layout/></PrivateRoutes>),children:[{path:'/',element:<Homepage/>},
     {path:'/add-expense',element:<AddExpensepage/>},
+    {path:'expense-items',element:<ExpenseItemsPage/>},
     {path:'/expenseDetails/:id',element:<ExpenseDetails/>},]},
     {path:"/login",element:<LoginPage />}
   ]);

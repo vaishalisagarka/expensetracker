@@ -10,6 +10,8 @@ function ExpenseList(){
     const [openModel,setOpenModel] = useState(false);
     const [editId, setEditId] = useState(null);
     const navigate = useNavigate();
+    const [filter,setFilter] = useState('all');
+    const [searchTerm,setSearchTerm] = useState('');
 
     const editHandler = (id) => {
         setEditId(id);
@@ -46,6 +48,20 @@ function ExpenseList(){
         navigate(`/expenseDetails/${id}`);
     };
 
+    const filteredExpenses = expenses.filter((item) => {
+        const matchesCategory = filter === 'all' || item.category === filter;
+        const matchesSearch = item.description.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesCategory && matchesSearch;
+    });
+
+    const handleFilterChange = (e) => {
+        setFilter(e.target.value);
+    }
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    }
+
     return(
         <>
         <div className="ExpenseList">
@@ -58,18 +74,21 @@ function ExpenseList(){
                 </div>
 
                 <div>
-                    <select>
-                        <option>All Categories</option>
-                        <option>Food</option>
-                        <option>Travel</option>
-                        <option>Shopping</option>
-                        <option>Entertainment</option>
+                    <select value={filter} onChange={handleFilterChange}>
+                        <option value="all">All </option>
+                        <option value="food">Food</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="education">Education</option>
+                        <option value="phoneBill">Phone Bill</option>
+                        <option value="entertainment">Entertainment</option>
                     </select>
 
                     <input
                     type="search"
-                    placeholder="Search Expenses..."
+                    placeholder="Search Expenses..." value={searchTerm} onChange={handleSearchChange}
                     />
+
                 </div>
             </div>
 
@@ -85,14 +104,15 @@ function ExpenseList(){
                 </thead>
 
                 <tbody>
-                    {expenses.length>0? (
-                        expenses.map((expense)=>(
+                    {filteredExpenses.length>0? (
+                        filteredExpenses.map((expense)=>(
                         <tr key={expense.id}>
                             <td>{expense.amount}</td>
                             <td>{expense.description}</td>
                             <td>{expense.date}</td>
                             <td>{expense.category}</td>
                              <td className="table-actions">
+                                
                                 <button  type="button" className="btn-delete" 
                                 onClick={() => setDeleteExpense(expense)}>Delete</button>
                                 
