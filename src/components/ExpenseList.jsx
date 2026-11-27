@@ -3,8 +3,10 @@ import '../styles/ExpenseList.css';
 import ConfirmationModal from './ConfirmationModal';
 import EditModel from './EditModel';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 function ExpenseList(){
+    const { theme } = useTheme();
     const [expenses,setExpenses]=useState([]);
     const [deleteExpense,setDeleteExpense]=useState(null);
     const [openModel,setOpenModel] = useState(false);
@@ -64,7 +66,7 @@ function ExpenseList(){
 
     return(
         <>
-        <div className="ExpenseList">
+        <div className={`ExpenseList ${theme}`}>
             <div className="list-search">
                 <div>
                     <h1>Your Expense</h1>
@@ -75,7 +77,7 @@ function ExpenseList(){
 
                 <div>
                     <select value={filter} onChange={handleFilterChange}>
-                        <option value="all">All </option>
+                        <option value="all">All Category</option>
                         <option value="food">Food</option>
                         <option value="shopping">Shopping</option>
                         <option value="Transportation">Transportation</option>

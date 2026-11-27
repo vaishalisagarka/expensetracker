@@ -1,8 +1,10 @@
-import { IoMoonSharp } from "react-icons/io5";
 import '../styles/Navbar.css';
 import { NavLink, useNavigate } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 export default function Navbar(){
+    const {theme,toggleTheme} = useTheme();
 
     const navigate = useNavigate();
     const logout = () => {
@@ -32,8 +34,10 @@ export default function Navbar(){
 
                 </div>
                 <div className="nav-actions">
-                    <button type="button" className="theme-toggle">
-                        <IoMoonSharp />
+                    <button type="button" className="theme-toggle"
+                     onClick={toggleTheme}>
+                        
+                        {theme === 'light' ? <FaMoon/> : <FaSun/>}
 
                     </button>
 
